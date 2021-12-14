@@ -1,5 +1,7 @@
 const createForm = document.querySelector("#createForm");
 const viewSeed = document.querySelector("#viewSeeds");
+const search = document.querySelector("#searchButton");
+
 
 const create = function (seedName, sowBy, harvestBy, expiration, isPlanted) {
     const newSeed = {
@@ -79,3 +81,18 @@ const viewSeeds = function() {
 }
 
 viewSeeds();
+
+const viewbyId = function(id) {
+    axios.get(`http://localhost:8080/get/${id}`)
+    .then(res => {
+        let seed = res.data;
+        viewSeed.innerHTML = "";
+            printSeed(seed);
+    }).catch(err => console.error(err));
+}
+
+search.addEventListener("click", function(event) {
+    event.preventDefault();
+    viewbyId(document.querySelector("#searchId").value);
+})
+
