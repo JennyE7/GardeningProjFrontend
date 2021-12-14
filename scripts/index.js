@@ -27,6 +27,13 @@ createForm.addEventListener("submit", function (event) {
         this.plantedCheck.checked);
 });
 
+const deleteSeedFunc = function(id) {
+    axios.delete(`http://localhost:8080/delete/${id}`)
+    .then(res => {
+        viewSeeds();
+    }).catch(err => console.error(err));
+}
+
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
     "October", "November", "December"];
 
@@ -81,6 +88,15 @@ const printSeed = function (seed) {
     edit.addEventListener("click", function(event){
         updateId = this.id;
         document.querySelector("#editDiv").style.display = "block";
+    })
+
+    const deleteSeed = document.createElement("button");
+    deleteSeed.classList.add("card-text");
+    deleteSeed.innerText = "Delete";
+    deleteSeed.id = seed.id;
+    cardBody.appendChild(deleteSeed);
+    deleteSeed.addEventListener("click", function(event){
+        deleteSeedFunc(this.id);
     })
 }
 
