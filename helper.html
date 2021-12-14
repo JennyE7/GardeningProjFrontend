@@ -46,6 +46,36 @@
                     </form>
                 </div>
             </div>
+            <div class="card" id="editDiv" style="display:none">
+                <div class="card-body">
+                    <h3 class="card-title">Edit a plant</h3>
+                    <form id="editForm">
+                        <div class="card-text">
+                            <label for="editSeedName">Enter the name:</label>
+                            <input type="text" id="editSeedName">
+                        </div>
+                        <div class="card-text">
+                            <label for="editPlantBy">Enter the sow by month (number form):</label>
+                            <input type="number" id="editPlantBy">
+                        </div>
+                        <div class="card-text">
+                            <label for="editHarvestBy">Enter the harvest by month (number form):</label>
+                            <input type="number" id="editHarvestBy">
+                        </div>
+                        <div class="card-text">
+                            <label for="editExpiration">Enter the expriation date:</label>
+                            <input type="date" id="editExpiration">
+                        </div>
+                        <div class="card-text">
+                            <label for="editPlantedCheck">Has it been planted?</label>
+                            <input type="checkbox" id="editPlantedCheck">
+                        </div>
+                        <div class="card-text">
+                            <input type="submit" value="Update">
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="col">
             <input type="number" style="display:inline; margin-left:60px; width:50px" id="searchId">

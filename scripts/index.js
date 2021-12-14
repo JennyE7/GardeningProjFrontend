@@ -48,7 +48,7 @@ const printSeed = function (seed) {
 
     const harvestBy = document.createElement("div");
     harvestBy.classList.add("card-text");
-    harvestBy.innerText = "Harvest by " + months[seed.harvestByMonth -1];
+    harvestBy.innerText = "Harvest by " + months[seed.harvestByMonth - 1];
     cardBody.appendChild(harvestBy);
 
     const expiration = document.createElement("div");
@@ -73,37 +73,39 @@ const printSeed = function (seed) {
     edit.classList.add("card-text");
     edit.innerText = "Edit";
     cardBody.appendChild(edit);
+    edit.addEventListener("click", function(event){
+        document.querySelector("#editDiv").style.display = "block";
+    })
 }
 
-const viewSeeds = function() {
+const viewSeeds = function () {
     axios.get("http://localhost:8080/getAll")
-    .then(res => {
-        viewSeed.innerHTML = "";
-        let seeds = res.data;
-        for(let seed of seeds) {
-            printSeed(seed);
-        }
-    }).catch(err => console.error(err));
+        .then(res => {
+            viewSeed.innerHTML = "";
+            let seeds = res.data;
+            for (let seed of seeds) {
+                printSeed(seed);
+            }
+        }).catch(err => console.error(err));
 }
 
 viewSeeds();
 
-const viewbyId = function(id) {
+const viewbyId = function (id) {
     axios.get(`http://localhost:8080/get/${id}`)
-    .then(res => {
-        let seed = res.data;
-        viewSeed.innerHTML = "";
+        .then(res => {
+            let seed = res.data;
+            viewSeed.innerHTML = "";
             printSeed(seed);
-    }).catch(err => console.error(err));
+        }).catch(err => console.error(err));
 }
 
-search.addEventListener("click", function(event) {
+search.addEventListener("click", function (event) {
     event.preventDefault();
     viewbyId(document.querySelector("#searchId").value);
 })
 
-resetButton.addEventListener("click", function(event) {
+resetButton.addEventListener("click", function (event) {
     event.preventDefault();
     viewSeeds();
 })
-
