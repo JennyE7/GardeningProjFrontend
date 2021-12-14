@@ -40,7 +40,7 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 const printSeed = function (seed) {
 
     const card = document.createElement("div");
-    card.classList.add("card", "col-2");
+    card.classList.add("card", "col-3");
     viewSeed.appendChild(card);
 
     const cardBody = document.createElement("div");
@@ -62,9 +62,14 @@ const printSeed = function (seed) {
     harvestBy.innerText = "Harvest by " + months[seed.harvestByMonth - 1];
     cardBody.appendChild(harvestBy);
 
+    const dd = seed.expirationDate.substring(8);
+    const mm = seed.expirationDate.substring(4,8);
+    const yyyy = seed.expirationDate.substring(0,4);
+    const formattedDate = dd + mm + yyyy;
+
     const expiration = document.createElement("div");
     expiration.classList.add("card-text");
-    expiration.innerText = "Expires: " + seed.expirationDate;
+    expiration.innerText = "Expires: " + formattedDate;
     cardBody.appendChild(expiration);
 
     let planted = "";
@@ -80,21 +85,28 @@ const printSeed = function (seed) {
     isPlanted.innerText = planted;
     cardBody.appendChild(isPlanted);
 
-    const edit = document.createElement("button");
+    const buttonDiv = document.createElement("div");
+    buttonDiv.style.display = "flex";
+    buttonDiv.style.justifyContent = "space-between";
+
+    const edit = document.createElement("input");
+    edit.type = "button";
     edit.classList.add("card-text");
-    edit.innerText = "Edit";
+    edit.value = "Edit";
     edit.id = seed.id;
-    cardBody.appendChild(edit);
+    buttonDiv.appendChild(edit)
+    cardBody.appendChild(buttonDiv);
     edit.addEventListener("click", function(event){
         updateId = this.id;
         document.querySelector("#editDiv").style.display = "block";
     })
 
-    const deleteSeed = document.createElement("button");
+    const deleteSeed = document.createElement("input");
+    deleteSeed.type = "button";
     deleteSeed.classList.add("card-text");
-    deleteSeed.innerText = "Delete";
+    deleteSeed.value = "Delete";
     deleteSeed.id = seed.id;
-    cardBody.appendChild(deleteSeed);
+    buttonDiv.appendChild(deleteSeed);
     deleteSeed.addEventListener("click", function(event){
         deleteSeedFunc(this.id);
     })
