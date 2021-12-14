@@ -11,7 +11,7 @@ const create = function (seedName, sowBy, harvestBy, expiration, isPlanted) {
     }
     axios.post("http://localhost:8080/create", newSeed)
         .then(res => {
-
+            viewSeeds();
         }).catch(err => console.error(err));
 }
 
@@ -67,3 +67,15 @@ const printSeed = function (seed) {
     isPlanted.innerText = planted;
     cardBody.appendChild(isPlanted);
 }
+
+const viewSeeds = function() {
+    axios.get("http://localhost:8080/getAll")
+    .then(res => {
+        let seeds = res.data;
+        for(let seed of seeds) {
+            printSeed(seed);
+        }
+    }).catch(err => console.error(err));
+}
+
+viewSeeds();
