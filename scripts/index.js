@@ -3,6 +3,7 @@ const viewSeed = document.querySelector("#viewSeeds");
 const search = document.querySelector("#searchButton");
 const resetButton = document.querySelector("#resetButton");
 const editForm = document.querySelector("#editForm");
+const editCancel = document.querySelector("#editCancel");
 
 let updateId;
 
@@ -134,4 +135,9 @@ editForm.addEventListener("submit", function(event) {
     event.preventDefault();
     updateSeed(updateId, this.editSeedName.value, this.editPlantBy.value, this.editHarvestBy.value,
         this.editExpiration.value, this.editPlantedCheck.checked);
+});
+
+editCancel.addEventListener("click", function(event) {
+    event.preventDefault();
+    document.querySelector("#editDiv").style.display = "none";
 });
