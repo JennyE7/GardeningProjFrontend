@@ -2,6 +2,9 @@ const createForm = document.querySelector("#createForm");
 const viewSeed = document.querySelector("#viewSeeds");
 const search = document.querySelector("#searchButton");
 const resetButton = document.querySelector("#resetButton");
+const editForm = document.querySelector("#editForm");
+
+let updateId;
 
 const create = function (seedName, sowBy, harvestBy, expiration, isPlanted) {
     const newSeed = {
@@ -72,8 +75,10 @@ const printSeed = function (seed) {
     const edit = document.createElement("button");
     edit.classList.add("card-text");
     edit.innerText = "Edit";
+    edit.id = seed.id;
     cardBody.appendChild(edit);
     edit.addEventListener("click", function(event){
+        updateId = this.id;
         document.querySelector("#editDiv").style.display = "block";
     })
 }
@@ -91,7 +96,7 @@ const viewSeeds = function () {
 
 viewSeeds();
 
-const viewbyId = function (id) {
+const viewbyId = function (id, ) {
     axios.get(`http://localhost:8080/get/${id}`)
         .then(res => {
             let seed = res.data;
@@ -109,3 +114,24 @@ resetButton.addEventListener("click", function (event) {
     event.preventDefault();
     viewSeeds();
 })
+
+const updateSeed = function(id, seedName, sowBy, harvestBy, expiration, isPlanted) {
+    const newSeed = {
+        seedName: seedName,
+        sowByMonth: sowBy,
+        harvestByMonth: harvestBy,
+        expirationDate: expiration,
+        isPlanted: isPlanted
+    }
+    axios.put(`http://localhost:8080/update/${id}`, newSeed)
+    .then(res => {
+        document.querySelector("#editDiv").style.display = "none";
+        viewSeeds();
+    }).catch(err => console.error(err));
+}
+
+editForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    updateSeed(updateId, this.editSeedName.value, this.editPlantBy.value, this.editHarvestBy.value,
+        this.editExpiration.value, this.editPlantedCheck.checked);
+});
