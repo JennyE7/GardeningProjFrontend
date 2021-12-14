@@ -82,6 +82,15 @@ const printSeed = function (seed) {
         updateId = this.id;
         document.querySelector("#editDiv").style.display = "block";
     })
+
+    const deleteSeed = document.createElement("button");
+    deleteSeed.classList.add("card-text");
+    deleteSeed.innerText = "Delete";
+    deleteSeed.id = seed.id;
+    cardBody.appendChild(deleteSeed);
+    deleteSeed.addEventListener("click", function(event){
+        
+    })
 }
 
 const viewSeeds = function () {
