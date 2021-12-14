@@ -68,6 +68,11 @@ const printSeed = function (seed) {
     isPlanted.classList.add("card-text");
     isPlanted.innerText = planted;
     cardBody.appendChild(isPlanted);
+
+    const edit = document.createElement("button");
+    edit.classList.add("card-text");
+    edit.innerText = "Edit";
+    cardBody.appendChild(edit);
 }
 
 const viewSeeds = function() {
@@ -101,3 +106,4 @@ resetButton.addEventListener("click", function(event) {
     event.preventDefault();
     viewSeeds();
 })
+
