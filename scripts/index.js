@@ -49,13 +49,15 @@ const printSeed = function (seed) {
 
     const cardTitle = document.createElement("h5");
     cardTitle.classList.add("card-title");
+    cardTitle.style.display = "flex";
+    cardTitle.style.justifyContent = "center";
     cardTitle.innerText = seed.seedName;
     cardBody.appendChild(cardTitle);
 
-    const seedName = document.createElement("div");
-    seedName.classList.add("card-text");
-    seedName.innerText = "Sow by " + months[seed.sowByMonth - 1];
-    cardBody.appendChild(seedName);
+    const harvest = document.createElement("div");
+    harvest.style.justifyContent = "center";
+    harvest.innerText = "Sow by " + months[seed.sowByMonth - 1];
+    cardBody.appendChild(harvest);
 
     const harvestBy = document.createElement("div");
     harvestBy.classList.add("card-text");
@@ -85,25 +87,54 @@ const printSeed = function (seed) {
     isPlanted.innerText = planted;
     cardBody.appendChild(isPlanted);
 
+    const d = new Date();
+    const month = d.getMonth() + 1;
+
+    let plantOrHarvest = "";
+    let textColour = "";
+
+    if (seed.isPlanted && month == seed.harvestByMonth) {
+        plantOrHarvest = "Harvest me this month!";
+        textColour = "blue";
+    }
+    if (!seed.isPlanted && month == seed.sowByMonth) {
+        plantOrHarvest = "Plant me this month!"
+        textColour = "blue";
+    }
+    if ((new Date(seed.expirationDate + "Z") < d) && (!seed.isPlanted)) {
+        plantOrHarvest = "I'm expired";
+        textColour = "red";
+    }
+
+    const plantOrHarv = document.createElement("div");
+    plantOrHarv.classList.add("card-text");
+    plantOrHarv.innerText = plantOrHarvest;
+    plantOrHarv.style.color = textColour;
+    cardBody.appendChild(plantOrHarv);
+
     const buttonDiv = document.createElement("div");
     buttonDiv.style.display = "flex";
-    buttonDiv.style.justifyContent = "space-between";
+    buttonDiv.style.justifyContent = "center";
 
     const edit = document.createElement("input");
     edit.type = "button";
-    edit.classList.add("card-text");
+    edit.classList.add("card-text", "inputBtn");
     edit.value = "Edit";
     edit.id = seed.id;
     buttonDiv.appendChild(edit)
     cardBody.appendChild(buttonDiv);
     edit.addEventListener("click", function(event){
+        document.querySelector("#editSeedName").value = seed.seedName;
+        document.querySelector("#editPlantBy").value = seed.sowByMonth;
+        document.querySelector("#editHarvestBy").value = seed.harvestByMonth;
+        document.querySelector("#editExpiration").value = seed.expirationDate;
         updateId = this.id;
         document.querySelector("#editDiv").style.display = "block";
     })
 
     const deleteSeed = document.createElement("input");
     deleteSeed.type = "button";
-    deleteSeed.classList.add("card-text");
+    deleteSeed.classList.add("card-text", "inputBtn");
     deleteSeed.value = "Delete";
     deleteSeed.id = seed.id;
     buttonDiv.appendChild(deleteSeed);
