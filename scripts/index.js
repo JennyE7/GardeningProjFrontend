@@ -4,6 +4,7 @@ const search = document.querySelector("#searchButton");
 const resetButton = document.querySelector("#resetButton");
 const editForm = document.querySelector("#editForm");
 const editCancel = document.querySelector("#editCancel");
+const searchName = document.querySelector("#searchNameButton");
 
 let updateId;
 
@@ -201,3 +202,19 @@ editCancel.addEventListener("click", function(event) {
     event.preventDefault();
     document.querySelector("#editDiv").style.display = "none";
 });
+
+const searchByName = function(name) {
+    axios.get(`http://localhost:8080/getName/${name}`)
+    .then(res => {
+        viewSeed.innerHTML = "";
+        let seeds = res.data;
+        for (let seed of seeds) {
+            printSeed(seed);
+        }
+    }).catch(err => console.error(err));
+}
+
+searchName.addEventListener("click", function(event) {
+    event.preventDefault();
+    searchByName(document.querySelector("#searchName").value);
+})
