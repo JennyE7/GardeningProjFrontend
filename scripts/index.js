@@ -40,6 +40,7 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 const printSeed = function (seed) {
 
     const card = document.createElement("div");
+    card.id = "card" + seed.id; 
     card.classList.add("card", "col-3");
     viewSeed.appendChild(card);
 
@@ -92,7 +93,6 @@ const printSeed = function (seed) {
 
     let plantOrHarvest = "";
     let textColour = "";
-
     if (seed.isPlanted && month == seed.harvestByMonth) {
         plantOrHarvest = "Harvest me this month!";
         textColour = "blue";
@@ -103,6 +103,7 @@ const printSeed = function (seed) {
     }
     if ((new Date(seed.expirationDate + "Z") < d) && (!seed.isPlanted)) {
         plantOrHarvest = "I'm expired";
+        card.classList.add("bg-warning");
         textColour = "red";
     }
 
